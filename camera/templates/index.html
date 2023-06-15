@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Control Center</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>🏠Control Center</h1>
+        </header>
+        <div class="stream-container">
+            <h2>📷CAM</h2>
+            <img src="{{ url_for('stream') }}">
+            <h3>Image processing options</h3>
+            <div class="buttons">
+                <button id="blurButton">Blur human face</button>
+                <button id="detectButton">Detect objects</button>
+            </div>
+        </div>
+        <footer>
+            <p>👨‍💻Made by ksterx
+                <a href="https://github.com/ksterx">GitHub</a>
+                /
+                <a href="https://twitter.com/afro2men">Twitter</a>
+            </p>
+        </footer>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    </body>
+</html>
