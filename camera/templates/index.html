@@ -8,15 +8,35 @@
     </head>
     <body>
         <header>
-            <h1>🏠Control Center</h1>
+            <h1>🏠CONTROL CENTER</h1>
         </header>
-        <div class="stream-container">
-            <h2>📷CAM</h2>
-            <img src="{{ url_for('stream') }}">
-            <h3>Image processing options</h3>
-            <div class="buttons">
-                <button id="blurButton">Blur human face</button>
-                <button id="detectButton">Detect objects</button>
+        <div style="display: flex;">
+            <div class="watering-container">
+                <h2>💧Watering</h2>
+                <div class="buttons">
+                    <button id="waterButton">Water</button>
+                    <button id="stopButton">Stop</button>
+                </div>
+            </div>
+            <div class="stream-container">
+                <h2>📷Camera</h2>
+                <img src="{{ url_for('stream') }}">
+                <div class="processing-options">
+                    <h3>OPTIONS</h3>
+                    <label for="model">Model:</label>
+                    <select id="model">
+                        <option>YOLOv5</option>
+                        <option>Own model</option>
+                    </select>
+                    <div class="checkbox">
+                        <input type="checkbox" id="blur">
+                        <label for="blur"><p>Blur human face</p></label>
+                        <input type="checkbox" id="detect">
+                        <label for="detect"><p>Detect objects</p></label>
+                        <input type="checkbox" id="pose">
+                        <label for="pose"><p>Estimate pose</p></label>
+                    </div>
+                </div>
             </div>
         </div>
         <footer>
