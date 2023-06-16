@@ -10,40 +10,51 @@
         <header>
             <h1>🏠CONTROL CENTER</h1>
         </header>
-        <div style="display: flex;">
-            <div class="watering-container">
+        <div class="two-columns">
+            <div class="container">
                 <h2>💧Watering</h2>
                 <div class="buttons">
                     <button id="waterButton">Water</button>
                     <button id="stopButton">Stop</button>
                 </div>
             </div>
-            <div class="stream-container">
+            <div class="container">
                 <h2>📷Camera</h2>
                 <img src="{{ url_for('stream') }}">
-                <div class="processing-options">
-                    <h3>OPTIONS</h3>
-                    <label for="model">Model:</label>
-                    <select id="model">
+                <div class="front">
+                    <h3>🔧OPTIONS</h3>
+                    <label for="model"><strong>Model:</strong></label>
+                    <select id="model"">
                         <option>YOLOv5</option>
                         <option>Own model</option>
                     </select>
                     <div class="checkbox">
-                        <input type="checkbox" id="blur">
-                        <label for="blur"><p>Blur human face</p></label>
-                        <input type="checkbox" id="detect">
-                        <label for="detect"><p>Detect objects</p></label>
-                        <input type="checkbox" id="pose">
-                        <label for="pose"><p>Estimate pose</p></label>
+                        <strong>Function</strong>
+                        <ui>
+                            <li>
+                                <input type="checkbox" id="blur">
+                                <label for="blur" class="italic">Blur human face</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="detect">
+                                <label for="detect" class="italic">Detect objects</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="pose">
+                                <label for="pose" class="italic">Estimate pose</label>
+                            </li>
+                        </ui>
                     </div>
                 </div>
             </div>
         </div>
         <footer>
-            <p>👨‍💻Made by ksterx
-                <a href="https://github.com/ksterx">GitHub</a>
+            <p>
+                💡 Made by <b><i>ksterx</i></b> 💡
+                <br>
+                <a target="_blank" href="https://github.com/ksterx">GitHub</a>
                 /
-                <a href="https://twitter.com/afro2men">Twitter</a>
+                <a target="_blank" href="https://twitter.com/afro2men">Twitter</a>
             </p>
         </footer>
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
