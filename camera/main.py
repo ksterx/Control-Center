@@ -1,4 +1,4 @@
-from flask import Response, render_template
+from flask import Response, render_template, request
 
 from camera import STREAM_URL_002, app
 
@@ -22,6 +22,11 @@ def gen(camera):
     while True:
         frame = camera.get_frame()
         yield (b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + frame + b"\r\n\r\n")
+
+
+@app.route("/options", methods=["POST"])
+def set_options():
+    model_name = request.form["model_name"]
 
 
 if __name__ == "__main__":
