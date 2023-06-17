@@ -1,36 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Control Center</title>
+        <title>Smarto</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     </head>
     <body>
         <header>
-            <h1>🏠CONTROL CENTER</h1>
+            <h1>🏠Smarto</h1>
         </header>
         <div class="two-columns">
-            <div class="container">
+            <!-- Watering -->
+            <div class="container left">
                 <h2>💧Watering</h2>
                 <div class="buttons">
                     <button id="waterButton">Water</button>
                     <button id="stopButton">Stop</button>
                 </div>
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown link
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="container">
+            <div class="container right">
                 <h2>📷Camera</h2>
                 <img src="{{ url_for('stream') }}">
-                <form class="front" method="post" action="{{ url_for('index') }}">
-                    <h3>🔧OPTIONS</h3>
-                    <label for="model"><strong>Model:</strong></label>
-                    <select id="model"">
+                <form class="front" method="post" action="/processing-options">
+                    <h4>🔧OPTIONS</h4>
+                    <label for="model_name"><strong>Model:</strong></label>
+                    <select id="model_name" name="model_name">
                         <optgroup label="YOLO">
-                            <option>v8n</option>
-                            <option>v8s</option>
-                            <option>v8m</option>
-                            <option>v8l</option>
-                            <option>v8x</option>
+                            <option>YOLOv8n</option>
+                            <option>YOLOv8s</option>
+                            <option>YOLOv8m</option>
+                            <option>YOLOv8l</option>
+                            <option>YOLOv8x</option>
                         </optgroup>
                         <optgroup label="Own model">
                             <option>dummy</option>
@@ -53,19 +66,23 @@
                             </li>
                         </ui>
                     </div>
-                    <input type="submit" id="submit" value="Submit">
+                    <input type="submit" id="apply" value="Apply">
                 </form>
             </div>
         </div>
         <footer>
             <p>
                 💡 Made by <b><i>ksterx</i></b> 💡
-                <br>
-                <a target="_blank" href="https://github.com/ksterx">GitHub</a>
-                /
-                <a target="_blank" href="https://twitter.com/afro2men">Twitter</a>
             </p>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="https://github.com/ksterx">GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="https://twitter.com/afro2men">Twitter</a>
+                </li>
+            </ul>
         </footer>
-        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        <script src="../static/js/index.js"></script>
     </body>
 </html>

@@ -24,7 +24,7 @@ def gen(camera):
         yield (b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + frame + b"\r\n\r\n")
 
 
-@app.route("/options", methods=["POST"])
+@app.route("/processing-options", methods=["POST"])
 def set_options():
     model_name = request.form["model_name"]
 
