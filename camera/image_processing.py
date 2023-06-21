@@ -1,25 +1,52 @@
+from abc import ABC, abstractmethod
+from typing import Optional
+
 import cv2
 import numpy as np
 from ultralytics import YOLO
 
 
-class VideoStream:
-    YOLO_DIR = "camera/nn/YOLO/"
-    WEIGHTS_v8n = YOLO_DIR + "yolov8n.pt"
-    WEIGHTS_v8s = YOLO_DIR + "yolov8s.pt"
-    WEIGHTS_v8m = YOLO_DIR + "yolov8m.pt"
-    WEIGHTS_v8l = YOLO_DIR + "yolov8l.pt"
-    WEIGHTS_v8x = YOLO_DIR + "yolov8x.pt"
-    THRESHOLD = 0.4
+class ImageProcessing:
+    def __init__(self, type, url, model_name: Optional[str] = None):
+        if type == "streaming":
+            return Streaming(url)
+        elif type == "object_detection":
+            return ObjectDetection(url, model_name)
+        elif type == "pose_estimation":
+            return PoseEstimation(url, model_name)
+        else:
+            raise ValueError(f"Unknown type: {type}")
 
-    def __init__(self, url):
+
+class Streaming(ABC):
+    def __init__(self, url, model_name: Optional[str] = None):
         self.video = cv2.VideoCapture(url)
-        self.model = YOLO(self.WEIGHTS_v8n)
-        self.names = self.model.names
-        self.colors = np.random.randint(0, 255, size=(len(self.names), 3), dtype="uint8")
+        if model_name is None:
+            self.model = None
 
     def __del__(self):
         self.video.release()
+
+    @abstractmethod
+    def get_frame(self):
+        _, results = self.video.read()
+        img = results
+        _, im = cv2.imencode(".jpg", img)
+        return im.tobytes()
+
+
+class ObjectDetection(Streaming):
+    YOLO_DIR = "camera/nn/YOLO/"
+    THRESHOLD = 0.4
+
+    def __init__(self, url, model_name: str):
+        super().__init__(url)
+        if model_name.startswith("YOLO"):
+            self.model = YOLO(self.YOLO_DIR + model_name.lower() + ".pt")
+            self.names = self.model.names
+            self.colors = np.random.randint(0, 255, size=(len(self.names), 3), dtype="uint8")
+        else:
+            raise ValueError(f"Unknown model name: {model_name}")
 
     def get_frame(self):
         _, results = self.video.read()
@@ -44,3 +71,8 @@ class VideoStream:
 
         _, im = cv2.imencode(".jpg", img)
         return im.tobytes()
+
+
+class PoseEstimation(Streaming):
+    def get_frame(self):
+        super().get_frame()

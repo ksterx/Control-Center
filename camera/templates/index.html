@@ -34,36 +34,46 @@
             <div class="container right">
                 <h2>📷Camera</h2>
                 <img src="{{ url_for('stream') }}">
-                <form class="front" method="post" action="/processing-options">
+                <form class="front" method="post" action="/">
                     <h4>🔧OPTIONS</h4>
                     <label for="model_name"><strong>Model:</strong></label>
-                    <select id="model_name" name="model_name">
+                    <select id="model_name" name="model_name" required>
+                        <option value="{{ options.model_name }}" disabled selected>{{ options.model_name }}</option>
                         <optgroup label="YOLO">
-                            <option>YOLOv8n</option>
-                            <option>YOLOv8s</option>
-                            <option>YOLOv8m</option>
-                            <option>YOLOv8l</option>
-                            <option>YOLOv8x</option>
+                            {% for yolos in yolos %}
+                            <option value="{{ yolos }}">{{ yolos }}</option>
+                            {% endfor %}
                         </optgroup>
                         <optgroup label="Own model">
-                            <option>dummy</option>
+                            <option value="dummy">dummy</option>
                         </optgroup>
                     </select>
                     <div class="checkbox">
-                        <strong>Function</strong>
+                        <strong>Functions</strong>
                         <ui>
                             <li>
-                                <input type="checkbox" id="blur">
-                                <label for="blur" class="italic">Blur human face</label>
+                                <input type="radio" id="r1" name="im_proc" value="streaming">
+                                <label for="r1" class="italic">Streaming</label>
                             </li>
                             <li>
-                                <input type="checkbox" id="detect">
-                                <label for="detect" class="italic">Detect objects</label>
+                                <input type="radio" id="r2" name="im_proc" value="object_detection">
+                                <label for="r2" class="italic">Object detection</label>
                             </li>
                             <li>
-                                <input type="checkbox" id="pose">
-                                <label for="pose" class="italic">Estimate pose</label>
+                                <input type="radio" id="r3" name="im_proc" value="pose_estimation">
+                                <label for="r3" class="italic">Pose estimation</label>
                             </li>
+                            {% for p in proc_status %}
+                            <li>
+                                {% if p == "false" %}
+                                <input type="radio" id="r4" name="im_proc" value="{{ p }}">
+                                <label for="r4" class="italic">{{ p }}</label>
+                                {% else %}
+                                <input type="radio" id="r4" name="im_proc" value="{{ p }}" checked>
+                                <label for="r4" class="italic">{{ p }}</label>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
                         </ui>
                     </div>
                     <input type="submit" id="apply" value="Apply">
